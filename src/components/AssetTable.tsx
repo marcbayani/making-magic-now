@@ -29,11 +29,6 @@ const mockAssets = [
 const AssetTable = () => {
   return (
     <div className="flex-1 p-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-foreground mb-2">ASSET</h1>
-        <h2 className="text-xl text-muted-foreground">MANAGEMENT</h2>
-      </div>
-
       <div className="flex items-center justify-between mb-6">
         <div className="relative w-80">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />

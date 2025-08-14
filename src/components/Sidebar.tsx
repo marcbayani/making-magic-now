@@ -3,7 +3,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 const Sidebar = () => {
   return (
     <aside className="w-64 border-r bg-background p-6">
-      <div className="space-y-6">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-foreground mb-2">ASSET</h1>
+        <h2 className="text-xl text-muted-foreground">MANAGEMENT</h2>
+      </div>
+      
+      <div className="space-y-6 mt-12">
         <div>
           <label className="text-sm font-medium text-muted-foreground mb-3 block">
             FILTER BY DEPARTMENT
