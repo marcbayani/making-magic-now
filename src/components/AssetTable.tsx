@@ -43,13 +43,31 @@ const AssetTable = () => {
   };
 
   const handleDownloadTemplate = () => {
-    // Create a simple CSV template
-    const csvContent = "Item Code,Department,Category,Description,Unit Price\nSample001,IT,Hardware,Desktop Computer,5000\n";
+    // Create an empty CSV template with just headers
+    const csvContent = "Item Code,Department,Category,Description,Unit Price,Ticket Count\n";
     const blob = new Blob([csvContent], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
     link.download = 'asset_template.csv';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  };
+
+  const handleExport = () => {
+    // Create CSV with current data
+    const headers = "Item Code,Department,Category,Description,Unit Price,Ticket Count\n";
+    const rows = mockAssets.map(asset => 
+      `${asset.itemCode},${asset.department},${asset.category},${asset.description},${asset.unitPrice},${asset.ticketCount}`
+    ).join('\n');
+    const csvContent = headers + rows;
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'assets_export.csv';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -86,7 +104,10 @@ const AssetTable = () => {
             onChange={handleFileChange}
             className="hidden"
           />
-          <Button className="bg-primary hover:bg-primary/90">
+          <Button 
+            className="bg-primary hover:bg-primary/90"
+            onClick={handleExport}
+          >
             <Download className="h-4 w-4 mr-2" />
             EXPORT
           </Button>
