@@ -8,7 +8,7 @@ const Sidebar = () => {
         <h2 className="text-xl text-muted-foreground">MANAGEMENT</h2>
       </div>
       
-      <div className="space-y-6 mt-6">
+      <div className="space-y-6 mt-12">
         <div>
           <label className="text-sm font-medium text-muted-foreground mb-3 block">
             FILTER BY DEPARTMENT
