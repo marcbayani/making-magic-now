@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { useRef } from "react";
 
 const mockAssets = [
   {
@@ -27,6 +28,34 @@ const mockAssets = [
 ];
 
 const AssetTable = () => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleBulkUpload = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      console.log("Selected file:", file.name);
+      // Handle file upload logic here
+    }
+  };
+
+  const handleDownloadTemplate = () => {
+    // Create a simple CSV template
+    const csvContent = "Item Code,Department,Category,Description,Unit Price\nSample001,IT,Hardware,Desktop Computer,5000\n";
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'asset_template.csv';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="flex-1 p-6">
       <div className="flex items-center justify-between mb-6">
@@ -43,10 +72,20 @@ const AssetTable = () => {
             <Plus className="h-4 w-4 mr-2" />
             ADD
           </Button>
-          <Button className="bg-primary hover:bg-primary/90">
+          <Button 
+            className="bg-primary hover:bg-primary/90"
+            onClick={handleBulkUpload}
+          >
             <Upload className="h-4 w-4 mr-2" />
             BULK UPLOAD
           </Button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".csv,.xlsx,.xls"
+            onChange={handleFileChange}
+            className="hidden"
+          />
           <Button className="bg-primary hover:bg-primary/90">
             <Download className="h-4 w-4 mr-2" />
             EXPORT
@@ -115,7 +154,10 @@ const AssetTable = () => {
           </PaginationContent>
         </Pagination>
 
-        <Button className="bg-primary hover:bg-primary/90">
+        <Button 
+          className="bg-primary hover:bg-primary/90"
+          onClick={handleDownloadTemplate}
+        >
           <Download className="h-4 w-4 mr-2" />
           DOWNLOAD TEMPLATE
         </Button>
